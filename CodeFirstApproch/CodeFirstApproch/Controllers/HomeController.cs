@@ -34,6 +34,7 @@ namespace CodeFirstApproch.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student std)
         {
             if(ModelState.IsValid)
@@ -76,6 +77,7 @@ namespace CodeFirstApproch.Controllers
             return View(stdData);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id , Student std)
         {
             if(id != std.ID)
@@ -107,6 +109,7 @@ namespace CodeFirstApproch.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var std =await studentDB.Students.FindAsync(id);
