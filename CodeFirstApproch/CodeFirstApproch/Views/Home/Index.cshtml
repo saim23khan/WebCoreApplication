@@ -9,6 +9,29 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@{
+    if(TempData["Create_Record"] != null){
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>success!</strong> @TempData["Create_Record"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else if (TempData["Update_Record"] != null){
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>success!</strong> @TempData["Update_Record"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else if (TempData["Delete_Record"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>success!</strong> @TempData["Delete_Record"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    
+}
 <table class="table">
     <thead>
         <tr>
