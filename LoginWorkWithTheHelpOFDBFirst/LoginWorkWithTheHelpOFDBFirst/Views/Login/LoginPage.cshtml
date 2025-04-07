@@ -3,6 +3,21 @@
 @{
     ViewData["Title"] = "LoginPage";
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@{
+    if (ViewBag.Message != null)
+    {
+        <p style="color:red">@ViewBag.Message</p>
+    }
+}
+
 
 <h1>LoginPage</h1>
 

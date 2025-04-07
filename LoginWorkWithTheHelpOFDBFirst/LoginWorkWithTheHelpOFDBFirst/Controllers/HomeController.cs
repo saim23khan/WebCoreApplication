@@ -1,4 +1,5 @@
 using LoginWorkWithTheHelpOFDBFirst.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -16,22 +17,51 @@ namespace LoginWorkWithTheHelpOFDBFirst.Controllers
 
         public IActionResult CreateUser()
         {
+            if (HttpContext.Session.GetString("AddSessionForLogin") != null)
+            {
+                ViewBag.MySession = HttpContext.Session.GetString("AddSessionForLogin").ToString();
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> CreateUser(User usertbl)
         {
+            
             if (ModelState.IsValid)
             {
                 await context.Users.AddAsync(usertbl);
                 await context.SaveChangesAsync();
-                return RedirectToAction("Privacy", "Home");
+                TempData["SuccessMessage"] = "User created successfully!";
+                return RedirectToAction("LoginPage", "Login");
+            }
+            return View();
+        }
+
+        public IActionResult Index()
+        {
+            if(HttpContext.Session.GetString("AddSessionForLogin") != null)
+            {
+                ViewBag.MySession = HttpContext.Session.GetString("AddSessionForLogin").ToString();
+
+            }
+            else
+            {
+                return RedirectToAction("LoginPage", "Login");
             }
             return View();
         }
 
         public IActionResult Privacy()
         {
+            if (HttpContext.Session.GetString("AddSessionForLogin") != null)
+            {
+                ViewBag.MySession = HttpContext.Session.GetString("AddSessionForLogin").ToString();
+            }
+            else
+            {
+                return RedirectToAction("LoginPage", "Login");
+            }
             return View();
         }
 
