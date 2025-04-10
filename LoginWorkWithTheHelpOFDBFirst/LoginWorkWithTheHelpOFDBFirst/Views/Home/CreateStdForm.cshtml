@@ -1,0 +1,84 @@
+﻿@model LoginWorkWithTheHelpOFDBFirst.Models.Student
+@using LoginWorkWithTheHelpOFDBFirst.Controllers
+
+@{
+    ViewData["Title"] = "CreateStdForm";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h1>CreateStdForm</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateStdForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StudenName" class="control-label"></label>
+                <input asp-for="StudenName" class="form-control" />
+                <span asp-validation-for="StudenName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FatherName" class="control-label"></label>
+                <input asp-for="FatherName" class="form-control" />
+                <span asp-validation-for="FatherName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @* <label asp-for="StudenGender" class="control-label"></label>
+                <div class="form-group">
+                    @Html.DropDownList("Gender",
+                Html.GetEnumSelectList<EnumGender>(), "Select Gender")
+                </div>
+                <span asp-validation-for="StudenGender" class="text-danger"></span> *@
+                @* <label asp-for="StudenGender" class="control-label"></label>
+                <div class="form-group">
+                @Html.DropDownList("Gender",
+                Html.GetEnumSelectList<EnumGender>(), "Select Gender")
+                </div>
+                <span asp-validation-for="StudenGender" class="text-danger"></span> *@
+                @* <select name="Gender" asp-items="@ViewBag.Gender">
+                     <option value="">Select Gender</option>
+                </select> *@
+                <label asp-for="StudenGender" class="control-label"></label>
+                <div class="form-group">
+                    @Html.DropDownListFor(x => x.StudenGender,
+                             new SelectList(ViewBag.Gender,"Value","Text"), "Select Gender", new { @class = "form-control" })
+                </div>
+                <span asp-validation-for="StudenGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GurdianContactNo" class="control-label"></label>
+                <input asp-for="GurdianContactNo" class="form-control" />
+                <span asp-validation-for="GurdianContactNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudenClass" class="control-label"></label>
+                <input asp-for="StudenClass" class="form-control" />
+                <span asp-validation-for="StudenClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudenAge" class="control-label"></label>
+                <input asp-for="StudenAge" class="form-control" />
+                <span asp-validation-for="StudenAge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
