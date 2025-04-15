@@ -63,8 +63,8 @@ namespace LoginWorkWithTheHelpOFDBFirst.Controllers
         {
             return new List<SelectListItem>
     {
-        new SelectListItem { Value = "0", Text = "Male" },
-        new SelectListItem { Value = "1", Text = "Female" }
+        new SelectListItem { Value = "male", Text = "Male" },
+        new SelectListItem { Value = "female", Text = "Female" }
     };
         }
 
@@ -86,15 +86,16 @@ namespace LoginWorkWithTheHelpOFDBFirst.Controllers
         public async Task<IActionResult> CreateStdForm(Student studencreate)
         {
             ViewBag.Gender = GetGenderList();
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await context.Students.AddAsync(studencreate);
                 await context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "User created successfully!";
                 return RedirectToAction("CreateStdForm");
             }
-
-            
+            // Only reach here if model is invalid, so repopulate gender list
+            ViewBag.Gender = GetGenderList();
+            TempData["SuccessMessage"] = "Something went wrong!";
             return View(studencreate);
         }
         public IActionResult Privacy()
