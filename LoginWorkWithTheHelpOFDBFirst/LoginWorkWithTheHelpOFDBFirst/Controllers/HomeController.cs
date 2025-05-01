@@ -98,6 +98,56 @@ namespace LoginWorkWithTheHelpOFDBFirst.Controllers
             TempData["SuccessMessage"] = "Something went wrong!";
             return View(studencreate);
         }
+
+        private StudentListModel DDLBind()
+        {
+            StudentListModel stdModel = new StudentListModel();
+            stdModel.StudentList = new List<SelectListItem>();
+            stdModel.StudentList.Add(new SelectListItem
+            {
+                Value = "",
+                Text = "Select Student Name"
+            });
+            var stdlist = context.Students.ToList();                 
+            foreach (var student in stdlist)
+            {
+                stdModel.StudentList.Add(new SelectListItem
+                {
+                    Value = student.Id.ToString(),
+                    Text = student.StudenName
+                });
+            }
+            return stdModel;
+        }
+
+        public IActionResult ViewProfile()
+        {
+            if (HttpContext.Session.GetString("AddSessionForLogin") != null)
+            {
+                ViewBag.MySession = HttpContext.Session.GetString("AddSessionForLogin").ToString();
+                var stdlist = DDLBind();
+                return View(stdlist);
+            }
+            else
+            {
+                return RedirectToAction("LoginPage", "Login");
+            }  
+            
+        }
+
+        [HttpPost]
+        public IActionResult ViewProfile(StudentListModel stdModel)
+        {
+            // Rebind dropdown list for redisplay
+            stdModel.StudentList = DDLBind().StudentList;
+
+            // Use Id directly, no need for TryParse
+            stdModel.SelectedStudent = context.Students.FirstOrDefault(s => s.Id == stdModel.Id);
+
+
+            return View(stdModel);
+           
+        }
         public IActionResult Privacy()
         {
             if (HttpContext.Session.GetString("AddSessionForLogin") != null)

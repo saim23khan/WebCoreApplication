@@ -1,0 +1,29 @@
+﻿@model LoginWorkWithTheHelpOFDBFirst.Models.StudentListModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Student Profile View</h1>
+<br />
+<form asp-controller="Home" asp-action="ViewProfile" method="post">
+    <label class="form-label">Select Student :</label>
+    <select asp-for="Id" class="form-control" asp-items="@(new SelectList(Model.StudentList,"Value","Text"))">
+</select>
+<br />
+<input type="submit" name="btnsubmit" value="Show" class="btn btn-success"/>
+</form>
+
+@if (Model.SelectedStudent != null)
+{
+    <hr />
+    <h3>Student Details</h3>
+    <p><strong>ID:</strong> @Model.SelectedStudent.Id</p>
+    <p><strong>Name:</strong> @Model.SelectedStudent.StudenName</p>
+    <p><strong>Father's Name:</strong> @Model.SelectedStudent.FatherName</p>
+    <p><strong>Student Gender:</strong> @Model.SelectedStudent.StudenGender</p>
+    <p><strong>Guardian COntact No:</strong> @Model.SelectedStudent.GurdianContactNo</p>
+    <p><strong>Present Class:</strong> @Model.SelectedStudent.StudenClass</p>
+    <p><strong>Student Age:</strong> @Model.SelectedStudent.StudenAge</p>
+}
